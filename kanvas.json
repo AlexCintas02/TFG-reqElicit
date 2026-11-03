@@ -1,0 +1,144 @@
+{
+  "kanvas": 1,
+  "title": "TFG:ReqElicit",
+  "groups": [
+    {
+      "id": "H1",
+      "name": "H1-Reproduccion"
+    },
+    {
+      "id": "H2",
+      "name": "H2-Datos"
+    },
+    {
+      "id": "H3",
+      "name": "H3-Simulador"
+    },
+    {
+      "id": "H4",
+      "name": "H4-Experimentos"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "H1-01",
+      "title": "WP0-Preparacion del entorno",
+      "state": "done",
+      "group": "H1",
+      "at": "2026-11-03T17:00:22Z",
+      "by": "human",
+      "desc": "\"Objetivo: Preparar el entorno base del TFG.\nLee el PDF de /docs para tener contexto.\nCrea un archivo /src/requirements.txt con las librerías base necesarias para un entorno reproducible de evaluación de LLMs (incluyendo openai, langgraph, litellm, pandas, etc.).\nCrea un archivo /src/config.py con una clase que fije las semillas de aleatoriedad (seed) y las versiones de los modelos (ej. Llama-3, GPT-4o).\nCrea un archivo /docs/presupuesto_api.md estimando el coste para 3600 diálogos (como marca el PDF).\nCrea un archivo /docs/borrador_correo_licencia.txt con un email formal en inglés dirigido a los autores de ReqElicitBench pidiendo permiso para usar su dataset.\"",
+      "notes": [
+        {
+          "at": "2026-11-03T17:38:30Z",
+          "by": "antigravity",
+          "text": "Plan: leer el PDF de /docs y crear requirements.txt, config.py, presupuesto_api.md y borrador_correo_licencia.txt según la descripción."
+        },
+        {
+          "at": "2026-11-03T17:42:35Z",
+          "by": "antigravity",
+          "text": "Los cuatro archivos de WP0 están creados, basados en el PDF del TFG.\n- src/requirements.txt: librerías base (openai, litellm, langgraph, gymnasium, pandas, scipy, scikit-learn…) con rangos de versión. Para fijar el entorno exacto, instala y congela con `pip freeze > src/requirements.lock` (sin red no he podido instalarlas ni comprobar las versiones en PyPI).\n- src/config.py: clase ReproConfig con 3 semillas, versiones fijadas de los modelos (GPT-4o 2024-08-06, Llama-3.1-8B, Salamandra-7B; ALIA-40B opcional) y una validación que impide que juez u oráculo sean de la misma familia que un entrevistador. Probado con `python3 src/config.py`.\n- docs/presupuesto_api.md: 3.600 diálogos ≈ 130 $ / 400 $ / 850 $ según la gama del juez y el oráculo, que son lo que más cuesta.\n- docs/borrador_correo_licencia.txt: email en inglés a los autores de ReqElicitBench. Rellena los [corchetes] antes de enviarlo.\n\nPara decidir o revisar:\n- Juez y oráculo: he puesto Qwen2.5-72B y Gemma-3-27B (pesos abiertos, no se retiran). ¿Te valen o prefieres modelos comerciales?\n- Fuentes secundarias dicen que gpt-4o-2024-08-06 se retira el 14-01-2027, antes del fin de los experimentos. Compruébalo en la web de OpenAI.\n- Partes de WP0 en el PDF que esta tarea no pedía: crear el repositorio git, revisar los requisitos éticos y comprobar qué GPU hace falta."
+        }
+      ]
+    },
+    {
+      "id": "H1-02",
+      "title": "WP1-Revision del estado del arte",
+      "state": "todo",
+      "group": "H1",
+      "at": "2026-11-03T17:01:47Z",
+      "by": "human",
+      "desc": "Leer y tabular 15 trabajos (LLMREI, Elicitron, etc.), fijar taxonomías e hipótesis en una matriz comparativa."
+    },
+    {
+      "id": "H1-03",
+      "title": "WP2-Reproduccion de ReqElicitGym",
+      "state": "todo",
+      "group": "H1",
+      "deps": ["H1-01"],
+      "at": "2026-11-03T17:02:58Z",
+      "by": "human",
+      "desc": "Instalar entorno, ejecutar piloto en 10 escenarios con un modelo abierto y uno comercial, medir coste por diálogo y documentar discrepancias."
+    },
+    {
+      "id": "H2-01",
+      "title": "WP3-Diseño del dataset ReqElicit-ES",
+      "state": "todo",
+      "group": "H2",
+      "deps": ["H1-02"],
+      "at": "2026-11-03T17:05:13Z",
+      "by": "human",
+      "desc": "Definir esquema JSON, taxonomía de implícitos y perfiles de cliente (vago, divagante, contradictorio)."
+    },
+    {
+      "id": "H2-02",
+      "title": "WP4-Construccion de escenarios",
+      "state": "todo",
+      "group": "H2",
+      "deps": ["H2-01"],
+      "at": "2026-11-03T17:05:59Z",
+      "by": "human",
+      "desc": "Traducir 101 escenarios, redactar 40-60 nativos, realizar doble anotación del 20% y congelar la partición de test."
+    },
+    {
+      "id": "H3-01",
+      "title": "WP5-Validacion del simulador",
+      "state": "todo",
+      "group": "H3",
+      "deps": ["H1-03"],
+      "at": "2026-11-03T17:19:07Z",
+      "by": "human",
+      "desc": "Adaptar prompts al español, implementar perfiles, anotar 20-30 entrevistas humanas y calcular K≥0,70."
+    },
+    {
+      "id": "H4-01",
+      "title": "WP6-Deasrrollo del agente entrevistador",
+      "state": "todo",
+      "group": "H4",
+      "deps": ["H3-01"],
+      "at": "2026-11-03T17:19:45Z",
+      "by": "human",
+      "desc": "Programar baselines (B0-B3) y agente estructurado con estado por dimensiones, planificador y guardarraíles."
+    },
+    {
+      "id": "H4-02",
+      "title": "WP7-Modulo de sintesis de requisitos",
+      "state": "todo",
+      "group": "H4",
+      "deps": ["H4-01"],
+      "at": "2026-11-03T17:20:11Z",
+      "by": "human",
+      "desc": "Generar historias de usuario con trazabilidad a turnos evaluando cobertura, precisión e invenciones."
+    },
+    {
+      "id": "H4-03",
+      "title": "WP8-Ejecucion de métricas y ablaciones",
+      "state": "todo",
+      "group": "H4",
+      "deps": ["H4-02"],
+      "at": "2026-11-03T17:20:53Z",
+      "by": "human",
+      "desc": "Ejecutar ~3.600 diálogos con semillas, extraer métricas (IRE, TKQR, ESR) y aplicar estadística de pares."
+    },
+    {
+      "id": "H4-04",
+      "title": "WP9-Desarrollo de interfaz web",
+      "state": "todo",
+      "group": "H4",
+      "deps": ["H4-01"],
+      "at": "2026-11-03T17:21:32Z",
+      "by": "human",
+      "desc": "Crear chat web con modo humano y simulación, panel de cobertura oculto y exportación local."
+    },
+    {
+      "id": "H4-05",
+      "title": "WP10-Memoria y empaquetado",
+      "state": "todo",
+      "group": "H4",
+      "deps": ["H4-04", "H4-03"],
+      "at": "2026-11-03T17:22:05Z",
+      "by": "human",
+      "desc": "Redactar la memoria final y preparar el paquete de réplica funcional con dataset, código y logs."
+    }
+  ]
+}

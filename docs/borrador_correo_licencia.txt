@@ -1,0 +1,30 @@
+To: [Corresponding author's email address]
+Cc: [Supervisor's email address]
+Subject: Request for permission to use the ReqElicitBench dataset in an academic thesis
+
+Dear Dr. [Surname] and co-authors,
+
+My name is [Your full name], and I am an undergraduate student in [Degree programme] at [University name], [Country]. I am currently working on my Bachelor's thesis (Trabajo de Fin de Grado), supervised by [Supervisor's title and full name], on conversational requirements elicitation with LLM agents in Spanish.
+
+I have read your paper on ReqElicitGym with great interest. Your environment, with its oracle, judge, and set of 101 scenarios, together with the IRE, TKQR and ESR metrics, is the methodological foundation of my project. I would therefore like to ask for your permission to use the ReqElicitBench repository and its dataset. I noticed that the repository does not currently include a license file, so I did not want to assume any rights of reuse or redistribution without asking you first.
+
+Specifically, I would like your permission to:
+
+1. Run and adapt the code of ReqElicitGym to reproduce the results reported in your paper.
+2. Translate the 101 scenarios into Spanish, with human post-editing, and use them as part of a new Spanish benchmark (provisionally named ReqElicit-ES), alongside new scenarios written natively in Spanish.
+3. Publish this derived Spanish dataset, together with the code, logs and results, as part of the thesis replication package under an open license, with full attribution to your work and a citation of your paper.
+
+The project is purely academic and non-commercial. Your work would be cited in the thesis, the dataset documentation (datasheet) and any resulting publication. If you would prefer different terms, for example using the scenarios without redistributing them or a specific license for the derived data, I would be happy to follow them. I would also be glad to share the Spanish dataset and the results with you once they are available, in case they are useful for your research.
+
+If you plan to add a license to the repository, could you let me know which one you intend to use? That would also fully resolve my question.
+
+Thank you very much for your time and for making your work available to the research community. I look forward to hearing from you.
+
+Kind regards,
+
+[Your full name]
+Bachelor's Degree in [Degree programme]
+[Faculty / School], [University name]
+[University email address]
+Supervisor: [Supervisor's title and full name], [Supervisor's email address]
+

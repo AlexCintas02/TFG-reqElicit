@@ -1,0 +1,48 @@
+# Entorno base del TFG "Elicitación conversacional de requisitos con agentes LLM en español"
+# Python >= 3.10
+#
+# Rangos con cota inferior y techo de versión mayor. Para que el entorno sea
+# reproducible, tras instalar congela las versiones exactas:
+#   python -m venv .venv && source .venv/bin/activate
+#   pip install -r src/requirements.txt
+#   pip freeze > src/requirements.lock
+# y usa requirements.lock en las ejecuciones experimentales.
+
+# --- Acceso a modelos (APIs comerciales y endpoints compatibles con OpenAI) ---
+openai>=1.50,<3            # cliente OpenAI; ReqElicitGym usa un endpoint compatible con OpenAI
+litellm>=1.50,<2           # interfaz común para APIs y modelos locales (vLLM, Ollama, HF TGI)
+tiktoken>=0.8,<1           # recuento de tokens para medir coste por diálogo
+tenacity>=9.0,<10          # reintentos con backoff ante límites de tasa
+diskcache>=5.6,<6          # caché de respuestas para no repetir llamadas (mitigación de coste)
+python-dotenv>=1.0,<2      # claves de API desde .env (nunca en el repositorio)
+
+# --- Agentes y entorno de simulación ---
+langgraph>=0.2,<2          # grafo de estado del entrevistador estructurado (M1/M2)
+langchain-core>=0.3,<2     # tipos de mensajes y utilidades usadas por langgraph
+gymnasium>=1.0,<2          # API de entorno usada por ReqElicitGym
+pydantic>=2.8,<3           # esquemas JSON de escenarios, turnos e historias de usuario
+jsonschema>=4.23,<5        # validación del esquema JSON de ReqElicit-ES
+pyyaml>=6.0,<7             # ficheros de configuración de experimentos
+
+# --- Datos, métricas y estadística ---
+pandas>=2.2,<3             # tablas de resultados y logs JSONL
+numpy>=1.26,<3
+scipy>=1.13,<2             # Wilcoxon por pares e intervalos bootstrap
+scikit-learn>=1.5,<2       # kappa de Cohen (acuerdo simulador/juez frente a humanos)
+statsmodels>=0.14,<1       # tamaños de efecto y correcciones por comparaciones múltiples
+
+# --- Análisis y utilidades ---
+matplotlib>=3.9,<4
+seaborn>=0.13,<1
+jupyterlab>=4.2,<5         # notebooks de análisis entregables
+tqdm>=4.66,<5
+rich>=13.7,<15             # salida legible por consola durante las ejecuciones
+
+# --- Pruebas ---
+pytest>=8.3,<9
+
+# --- Opcional: modelos abiertos en local (requiere GPU; ver docs/presupuesto_api.md) ---
+# vllm               # servidor OpenAI-compatible para Salamandra / ALIA / Llama
+# torch
+# transformers
+
