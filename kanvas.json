@@ -44,11 +44,63 @@
     {
       "id": "H1-02",
       "title": "WP1-Revision del estado del arte",
-      "state": "todo",
+      "state": "review",
       "group": "H1",
       "at": "2026-11-03T17:01:47Z",
       "by": "human",
-      "desc": "Leer y tabular 15 trabajos (LLMREI, Elicitron, etc.), fijar taxonomías e hipótesis en una matriz comparativa."
+      "desc": "Actúa como Investigador Principal en NLP4RE (Procesamiento del Lenguaje Natural para Ingeniería de Requisitos) dentro del proyecto ReqElicit-ES. \n\nCONTEXTO Y ESTADO DEL TABLERO:\n1. Primero, lee el archivo `kanvas.json` y `AGENTS.md` para verificar el estado actual del proyecto. Asegúrate de que el paquete `WP1` (Revisión del Estado del Arte) esté marcado como tarea activa (WIP).\n2. Inspecciona el directorio `docs/papers/` y lista todos los archivos disponibles.\n\nOBJETIVO DE ESTA FASE (Paso 1 de 2 - Extracción Estructurada sin pérdida de detalle):\nNecesitamos analizar los artículos dentro de `docs/papers/` para construir la base científica de nuestro TFG y extraer las especificaciones técnicas que usaremos en el código de los paquetes WP3, WP5, WP6 y WP7. \n\nPara evitar saturar tu ventana de contexto o perder precisión técnica leyendo todos los PDFs de golpe, procesa los documentos de `docs/papers/` en lotes lógicos (de 3 a 5 papers por lote) y ve construyendo o actualizando un archivo intermedio llamado `docs/notas_extraccion_wp1.md` con la siguiente estructura estricta para CADA trabajo:\n\n- **Referencia y Año**: Autores, título, año y venue.\n- **Problema y Fase de RE**: ¿Elicitación interactiva, simulación de stakeholders, extracción post-entrevista o revisión sistemática?\n- **Metodología / Arquitectura Agéntica**: Prompting (zero-shot, few-shot, CoT, least-to-most), estado interno, modelos base empleados y si separa roles (entrevistador, oráculo, juez).\n- **Datos, Idioma y Dominio**: Número de escenarios/entrevistas, idioma, si son sintéticos o reales y licencia.\n- **Métricas y Resultados Cuantitativos Exactos**: Cifras literales reportadas (IRE, TKQR, ESR, Kappa de Cohen, cobertura, trazabilidad, etc.).\n- **Insumo Directo para ReqElicit-ES**:\n  * Si es LLMREI o Follow-Up Questions: detalla la lógica algorítmica exacta y estructura de prompts para implementar nuestros baselines B2 y B3 en el WP6.\n  * Si es ReqElicitGym / WebGen-Bench: detalla las fórmulas de IRE, TKQR, ESR, ORA, las clases de acción del juez y las inconsistencias frente al código.\n  * Si es Elicitron: detalla cómo parametriza los perfiles de usuario (para nuestros 5 perfiles en WP5).\n  * Si es Generative Goal Modeling, RECOVER o LENS: detalla cómo evalúan historias de usuario, trazabilidad e invenciones (para nuestro Sintetizador en WP7).\n\nREGLA DE EJECUCIÓN:\nInspecciona primero `docs/papers/`, muéstrame la lista de archivos encontrados y el plan de lotes, y ejecuta el Lote 1 guardando el avance en `docs/notas_extraccion_wp1.md`. Espera mi validación antes de pasar al siguiente lote.",
+      "notes": [
+        {
+          "at": "2026-11-06T17:05:49Z",
+          "by": "antigravity",
+          "text": "Plan: inventariar docs/papers/, proponer lotes de 3-5 papers, ejecutar el Lote 1 en docs/notas_extraccion_wp1.md y esperar validación antes del Lote 2."
+        },
+        {
+          "at": "2026-11-06T17:10:52Z",
+          "by": "antigravity",
+          "text": "Lote 1 de 4 hecho en docs/notas_extraccion_wp1.md: ReqElicitGym, WebGen-Bench y WebGen-Agent.\n- Plan de lotes: 2) LLMREI, Follow-Up Questions, Interview Script Generator (WP6); 3) Elicitron, Goal Modeling, RECOVER, LENS (WP5/WP7); 4) las dos revisiones sistemáticas.\n- Hallazgos clave: ORA no aparece en el artículo (solo en el código); \"elicitado\" = la pregunta toca el implícito, no que el cliente lo revele (afecta a RQ3); 12 inconsistencias en ReqElicitGym, entre ellas que la Tabla 1 suma ≈585 implícitos y no 632; el estilo parece ser solo colores heredados de WebGen-Bench.\n- Hay 12 papers y el plan pide al menos 15."
+        },
+        {
+          "at": "2026-11-06T17:10:52Z",
+          "by": "antigravity",
+          "text": "Question: ¿Validas el Lote 1 (docs/notas_extraccion_wp1.md) y el plan de lotes para pasar al Lote 2?"
+        },
+        {
+          "at": "2026-11-06T17:36:43Z",
+          "by": "antigravity",
+          "text": "Respuesta del usuario: Lote 1 validado. Añadidos 3 nuevos documentos a docs/papers para incluir en el Lote 4. Procediendo con el Lote 2."
+        },
+        {
+          "at": "2026-11-06T17:40:21Z",
+          "by": "antigravity",
+          "text": "Lote 2 de 4 completado en docs/notas_extraccion_wp1.md y los 3 nuevos PDFs añadidos al inventario del Lote 4 (total: 15 trabajos).\n- 2.1 LLMREI (Korn et al., 2025): extraídos los prompts literales de LLMREI-short (zero-shot, 73,7 % recall: 60,94 % full + 12,76 % partial; 59,7 % preguntas adaptativas) y LLMREI-long (least-to-most a nivel de sesión con {Interview Cookbook} en 5 pasos, 64,23 % sin errores vs 59,1 % short). Documentado el fallo donde el bot pidió el email al usuario (base de nuestro guardarraíl de privacidad en WP6).\n- 2.2 Follow-Up Question Generation (Shen et al., 2025): extraídos los 3 prompts literales, la tipología de 7 preguntas de seguimiento, el hallazgo de que <=4 turnos previos cubren el 98,6 % (144/146) de las preguntas (y <=1 turno el 71,2 %), los 14 criterios de error (5 de seguimiento + 9 de encuadre), el acuerdo del 81,0 % (340/420) entre GPT-4o y analista humano, la preferencia del 68,0 % (87/128) por GPT-4o guiado por errores y los trucos de prompting (INTERVIEWER/INTERVIEWEE en mayúsculas, criterios en positivo sin negaciones). Diseñada la lógica algorítmica de B3 para WP6.\n- 2.3 Interview Script Generator (Görer y Aydemir, 2024): extraído el esquema de prompt chaining con RAG (GRUEN 0,79-0,81; evaluación experta: Naturalness 4, Coherence 4, Completeness 3) y los defectos detectados (stakeholder siempre cooperativo, omisión de otros actores/NFRs y sesgo al generar ambos roles con un solo LLM), que justifican nuestros perfiles en WP5, la dimensión 'actores' en M1 y el cierre con confirmación en M2."
+        },
+        {
+          "at": "2026-11-06T17:42:18Z",
+          "by": "antigravity",
+          "text": "Respuesta del usuario: Lote 2 validado. Procediendo a extraer el Lote 3 (Elicitron, Generative Goal Modeling, RECOVER, LENS)."
+        },
+        {
+          "at": "2026-11-06T17:50:22Z",
+          "by": "antigravity",
+          "text": "Completada la extracción estructurada del Lote 3 (Elicitron, Generative Goal Modeling, RECOVER y LENS) en docs/notas_extraccion_wp1.md (1.007 líneas), detallando el diseño de los 5 perfiles de cliente para WP5 y la arquitectura de extracción, trazabilidad y control de alucinaciones del Sintetizador para WP7. En pausa a la espera de validación del Lote 3 antes de proceder al Lote 4."
+        },
+        {
+          "at": "2026-11-06T17:53:45Z",
+          "by": "antigravity",
+          "text": "Usuario valida el Lote 3 e indica proceder con la extracción del Lote 4 (5 artículos: Zadenoori et al. 2025, Zhao et al. 2021, iReDev 2025, Bano et al. 2019 y Almeida et al. 2025) en docs/notas_extraccion_wp1.md, pausando al terminar para su confirmación."
+        },
+        {
+          "at": "2026-11-06T18:00:32Z",
+          "by": "antigravity",
+          "text": "Completada la extracción estructurada del Lote 4 (4.1 Zadenoori et al. 2025 SLR [74 estudios], 4.2 Zhao et al. 2021 NLP4RE SMS [404 estudios], 4.3 iReDev [Jin et al. 2025], 4.4 Bano et al. 2019 [34 errores en 7 categorías], 4.5 Almeida et al. WER 2025) en docs/notas_extraccion_wp1.md (1.441 líneas, 15/15 artículos extraídos). En pausa esperando confirmación del usuario para aceptar el Lote 4 y pasar al Paso 2 de WP1."
+        },
+        {
+          "at": "2026-11-06T18:25:19Z",
+          "by": "antigravity",
+          "text": "WP1 completado (Pasos 1 y 2): generados los entregables oficiales docs/estado_arte.md (capítulo académico completo en 8 secciones con las 17 fuentes: 15 papers de docs/papers/ + Salamandra Technical Report [Gonzalez-Agirre et al., 2025] + Dataset UPM [Aranda et al., 2025]) y docs/matriz_comparativa.md (matriz maestra de 18 filas + 3 sub-matrices de diseño para WP5, WP6 y WP7), aplicando las 4 directrices obligatorias de auditoría (M1/M2 sobre estado estructurado de 7 dimensiones con tuplas <Role|Goal|Behaviour|Constraint>, planificador clarificar/indagar, 1 pregunta/turno y criterio de parada; B2 con LLMREI-long restringido a 1 pregunta/turno; B3 en modo B3-SingleCall sobre 4 turnos). Listo en estado review para aceptación final (done) en el tablero Kanvas."
+        }
+      ]
     },
     {
       "id": "H1-03",
